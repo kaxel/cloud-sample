@@ -109,6 +109,36 @@ var countries = [{
     "text": "Australia",
     "url": "https://chillfiltr.com/tag/australia",
 	"valcount": 71
+  },
+  {
+    "text": "Ireland",
+    "url": "https://chillfiltr.com/tag/ireland",
+	"valcount": 16
+  },
+  {
+    "text": "New Zealand",
+    "url": "https://chillfiltr.com/tag/new-zealand",
+	"valcount": 14
+  },
+  {
+    "text": "Asia",
+    "url": "https://chillfiltr.com/tag/asia",
+	"valcount": 11
+  },
+  {
+    "text": "Norway",
+    "url": "https://chillfiltr.com/tag/norway",
+	"valcount": 11
+  },
+  {
+    "text": "Africa",
+    "url": "https://chillfiltr.com/tag/africa",
+	"valcount": 9
+  },
+  {
+    "text": "South America",
+    "url": "https://chillfiltr.com/tag/america",
+	"valcount": 4
   }
 ]
 
@@ -117,7 +147,7 @@ var countries = [{
 function getWords(i) {
     return countries
             .map(function(d) {
-                return {text: d.text, size: 10 + Math.random() * 60};
+                return {text: d.text, size: d.valcount};
             })
 }
 
