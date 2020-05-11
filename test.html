@@ -12,47 +12,112 @@
   </head>
 		
   <body>
+	<div id="cloud"></div>
 	
 		<script>
-		  var fill = d3.scaleOrdinal(d3.schemeCategory20);
+			// First define your cloud data, using `text` and `size` properties:
 
-		  var data = [
-		      {text: "Hello", value:6260},
-		      {text: "happy", value:5370},
-		      {text: "beautiful", value:2480},
-		      {text: "rainbow", value:4350},
-		      {text: "unicorn", value:1250},
-		      {text: "glitter", value:3140},
-		      {text: "happy", value:990},
-		      {text: "pie", value:4230}];
+			    var skillsToDraw = [
+			    	{ text: 'javascript', size: 40 },
+			    	{ text: 'D3.js', size: 15 },
+			    	{ text: 'coffeescript', size: 25 },
+			    	{ text: 'shaving sheep', size: 25 },
+			    	{ text: 'AngularJS', size: 30 },
+			    	{ text: 'Ruby', size: 30 },
+			    	{ text: 'ECMAScript', size: 15 },
+			    	{ text: 'Actionscript', size: 10 },
+			    	{ text: 'Linux', size: 20 },
+			    	{ text: 'C++', size: 20 },
+			    	{ text: 'C#', size: 25 },
+			    	{ text: 'JAVA', size: 38 },
+			      // just copy twice for extra data, else the cloud is a little boring
+			    	{ text: 'javascript', size: 40 },
+			    	{ text: 'D3.js', size: 15 },
+			    	{ text: 'coffeescript', size: 25 },
+			    	{ text: 'shaving sheep', size: 25 },
+			    	{ text: 'AngularJS', size: 30 },
+			    	{ text: 'Ruby', size: 30 },
+			    	{ text: 'ECMAScript', size: 15 },
+			    	{ text: 'Actionscript', size: 10 },
+			    	{ text: 'Linux', size: 20 },
+			    	{ text: 'C++', size: 20 },
+			    	{ text: 'C#', size: 25 },
+			    	{ text: 'JAVA', size: 38 },
+			    	{ text: 'javascript', size: 40 },
+			    	{ text: 'D3.js', size: 15 },
+			    	{ text: 'coffeescript', size: 25 },
+			    	{ text: 'shaving sheep', size: 25 },
+			    	{ text: 'AngularJS', size: 30 },
+			    	{ text: 'Ruby', size: 30 },
+			    	{ text: 'ECMAScript', size: 15 },
+			    	{ text: 'Actionscript', size: 10 },
+			    	{ text: 'Linux', size: 20 },
+			    	{ text: 'C++', size: 20 },
+			    	{ text: 'C#', size: 25 },
+			    	{ text: 'JAVA', size: 38 }
+			    ];
 
-		  var layout = d3.layout.cloud()
-		      .size([400, 300])
-		      .words(data)
-		      .font("Impact")
-		      .padding(5)
-		      .rotate(function() { return ~~(Math.random() * 2) * 90; })
-		      .on("end", draw);
+			// Next you need to use the layout script to calculate the placement, rotation and size of each word:
 
-		  layout.start();
+			var width = 500;
+			var height = 500;
+			var fill = d3.scale.category20();
 
-		  function draw(words) {
-		      d3.select("#demo2")
-		        .append("g")
-		        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
-		        .selectAll("text")
-		        .data(words)
-		        .enter()
-		        .append("text")
-		        .text((d) => d.text)
-		        .style("font-size", (d) => d.size + "px")
-		        .style("font-family", (d) => d.font)
-		        .style("fill", (d, i) => fill(i))
-		        .attr("text-anchor", "middle")
-		        .attr("transform", (d) => "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")");
-		  }
+			    d3.layout.cloud()
+			    	.size([width, height])
+			    	.words(skillsToDraw)
+			    	.rotate(function() {
+			    		return ~~(Math.random() * 2) * 90;
+			    	})
+			    	.font("Impact")
+			    	.fontSize(function(d) {
+			    		return d.size;
+			    	})
+			    	.on("end", drawSkillCloud)
+			    	.start();
+
+			// Finally implement `drawSkillCloud`, which performs the D3 drawing:
+
+			    // apply D3.js drawing API
+			    function drawSkillCloud(words) {
+			    	d3.select("#cloud").append("svg")
+			    		.attr("width", width)
+			    		.attr("height", height)
+			    		.append("g")
+			    		.attr("transform", "translate(" + ~~(width / 2) + "," + ~~(height / 2) + ")")
+			    		.selectAll("text")
+			    		.data(words)
+			    		.enter().append("text")
+			    		.style("font-size", function(d) {
+			    			return d.size + "px";
+			    		})
+			    		.style("-webkit-touch-callout", "none")
+			    		.style("-webkit-user-select", "none")
+			    		.style("-khtml-user-select", "none")
+			    		.style("-moz-user-select", "none")
+			    		.style("-ms-user-select", "none")
+			    		.style("user-select", "none")
+			    		.style("cursor", "default")
+			    		.style("font-family", "Impact")
+			    		.style("fill", function(d, i) {
+			    			return fill(i);
+			    		})
+			    		.attr("text-anchor", "middle")
+			    		.attr("transform", function(d) {
+			    			return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+			    		})
+			    		.text(function(d) {
+			    			return d.text;
+			    		});
+			    }
+    
+			// set the viewbox to content bounding box (zooming in on the content, effectively trimming whitespace)
+
+			    var svg = document.getElementsByTagName("svg")[0];
+			    var bbox = svg.getBBox();
+			    var viewBox = [bbox.x, bbox.y, bbox.width, bbox.height].join(" ");
+			    svg.setAttribute("viewBox", viewBox);
 		</script>
 			
-		<svg id="demo2" width="400" height="300"></svg>
   </body>
 </html>
