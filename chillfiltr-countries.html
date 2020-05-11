@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<body>
+
+<script src="https://d3js.org/d3.v3.min.js"></script>
+<script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+
+<script>
+var fill = d3.scale.category20();
+var words = [{
+    "text": "USA",
+    "url": "https://chillfiltr.com/tag/usa",
+	"valcount" : 751
+  },
+  {
+    "text": "UK",
+    "url": "https://chillfiltr.com/tag/uk",
+	"valcount" : 147
+  },
+  {
+    "text": "EU",
+    "url": "https://chillfiltr.com/tag/eu",
+	"valcount" : 129
+  },
+  {
+    "text": "Canada",
+    "url": "https://chillfiltr.com/tag/canada",
+	"valcount" : 89
+  },
+  {
+    "text": "Australia",
+    "url": "https://chillfiltr.com/tag/australia",
+	"valcount" : 71
+  }
+]
+var width = 900;
+var height = 500;
+for (var i = 0; i < words.length; i++) {
+  words[i].size = 10 + words[i].valcount * 90;
+}
+
+d3.layout.cloud()
+  .size([width, height])
+  .words(words)
+  .padding(5)
+  .rotate(function() {
+    return ~~(Math.random() * 2) * 90;
+  })
+  .font("Impact")
+  .fontSize(function(d) {
+    return d.size;
+  })
+  .on("end", draw)
+  .start();
+
+function draw(words) {
+  d3.select("body")
+    .append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .append("g")
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")")
+    .selectAll("text")
+    .data(words)
+    .enter()
+    .append("text")
+    .style("font-size", function(d) {
+      return d.size + "px";
+    })
+    .style("font-family", "Impact")
+    .style("fill", function(d, i) {
+      return fill(i);
+    })
+    .attr("text-anchor", "middle")
+    .attr("transform", function(d) {
+      return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+    })
+    .text(function(d) {
+      return d.text;
+    })
+    .on("click", function(d, i) {
+      window.open(d.url, "_blank");
+    });
+}
+</script>
+</body>
