@@ -34,10 +34,7 @@ function wordCloud(selector) {
             .attr("text-anchor", "middle")
             .attr('font-size', 1)
 			.on("click", function (d, i){ window.open(d.url, "_blank")})
-			.on({
-		      "mouseover": function(d) {
-		        d3.select(this).style("cursor", "pointer"); 
-		      })
+			.on("mouseover", function(d) {d3.select(this).style("cursor", "pointer")})
             .text(function(d) { return d.text; });
 
         //Entering and existing words
