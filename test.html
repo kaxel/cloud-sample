@@ -77,7 +77,7 @@ function wordCloud(selector) {
 
 }
 
-var mydata = [{
+var countries = [{
     "text": "USA",
     "url": "https://chillfiltr.com/tag/usa",
 	"valcount": 751
@@ -137,7 +137,7 @@ var mydata = [{
 //Prepare one of the sample sentences by removing punctuation,
 // creating an array of words and computing a random size attribute.
 function getWords(i) {
-    return mydata
+    return countries
             .map(function(d) {
                 return {text: d.text, size: ((d.valcount/2) + 20)};
             })
