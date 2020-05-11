@@ -147,7 +147,7 @@ var countries = [{
 function getWords(i) {
     return countries
             .map(function(d) {
-                return {text: d.text, size: d.valcount};
+                return {text: d.text, size: ((d.valcount/2) + 50)};
             })
 }
 
