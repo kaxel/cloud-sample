@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <body>
   <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="cloud.js"></script>
+  <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
   <script>
 
 //Simple animated example of d3-cloud - https://github.com/jasondavies/d3-cloud
@@ -77,69 +77,22 @@ function wordCloud(selector) {
 
 }
 
-var mydata = [{
-    "text": "USA",
-    "url": "https://chillfiltr.com/tag/usa",
-	"valcount": 751
-  },
-  {
-    "text": "UK",
-    "url": "https://chillfiltr.com/tag/uk",
-	"valcount": 147
-  },
-  {
-    "text": "EU",
-    "url": "https://chillfiltr.com/tag/eu",
-	"valcount": 129
-  },
-  {
-    "text": "Canada",
-    "url": "https://chillfiltr.com/tag/canada",
-	"valcount": 89
-  },
-  {
-    "text": "Australia",
-    "url": "https://chillfiltr.com/tag/australia",
-	"valcount": 71
-  },
-  {
-    "text": "Ireland",
-    "url": "https://chillfiltr.com/tag/ireland",
-	"valcount": 16
-  },
-  {
-    "text": "New Zealand",
-    "url": "https://chillfiltr.com/tag/new-zealand",
-	"valcount": 14
-  },
-  {
-    "text": "Asia",
-    "url": "https://chillfiltr.com/tag/asia",
-	"valcount": 11
-  },
-  {
-    "text": "Norway",
-    "url": "https://chillfiltr.com/tag/norway",
-	"valcount": 11
-  },
-  {
-    "text": "Africa",
-    "url": "https://chillfiltr.com/tag/africa",
-	"valcount": 9
-  },
-  {
-    "text": "South America",
-    "url": "https://chillfiltr.com/tag/america",
-	"valcount": 4
-  }
+//Some sample data - http://en.wikiquote.org/wiki/Opening_lines
+var words = [
+    "You don't know about me without you have read a book called The Adventures of Tom Sawyer but that ain't no matter.",
+    "The boy with fair hair lowered himself down the last few feet of rock and began to pick his way toward the lagoon.",
+    "When Mr. Bilbo Baggins of Bag End announced that he would shortly be celebrating his eleventy-first birthday with a party of special magnificence, there was much talk and excitement in Hobbiton.",
+    "It was inevitable: the scent of bitter almonds always reminded him of the fate of unrequited love."
 ]
 
 //Prepare one of the sample sentences by removing punctuation,
 // creating an array of words and computing a random size attribute.
 function getWords(i) {
-    return mydata
+    return words[i]
+            .replace(/[!\.,:;\?]/g, '')
+            .split(' ')
             .map(function(d) {
-                return {text: d.text, size: ((d.valcount/2) + 20)};
+                return {text: d, size: 10 + Math.random() * 60};
             })
 }
 
