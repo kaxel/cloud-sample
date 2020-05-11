@@ -44,8 +44,8 @@
             word_count[words[0]] = 1;
           } else {
             words.forEach(function(t_word){
-              var word = t_word[0].toLowerCase();
-              word_count[word] = parseInt(t_word[2]);
+              var word = t_word.text.toLowerCase();
+              word_count[word] = parseInt(t_word.valcount);
             })
           }
 
