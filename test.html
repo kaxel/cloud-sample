@@ -2,7 +2,7 @@
 <meta charset="utf-8">
 <body>
   <script src="https://d3js.org/d3.v3.min.js"></script>
-  <script src="https://rawgit.com/jasondavies/d3-cloud/master/build/d3.layout.cloud.js"></script>
+  <script src="cloud.js"></script>
   <script>
 
 //Simple animated example of d3-cloud - https://github.com/jasondavies/d3-cloud
@@ -85,14 +85,39 @@ var words = [
     "It was inevitable: the scent of bitter almonds always reminded him of the fate of unrequited love."
 ]
 
+var countries = [{
+    "text": "USA",
+    "url": "https://chillfiltr.com/tag/usa",
+	"valcount": 751
+  },
+  {
+    "text": "UK",
+    "url": "https://chillfiltr.com/tag/uk",
+	"valcount": 147
+  },
+  {
+    "text": "EU",
+    "url": "https://chillfiltr.com/tag/eu",
+	"valcount": 129
+  },
+  {
+    "text": "Canada",
+    "url": "https://chillfiltr.com/tag/canada",
+	"valcount": 89
+  },
+  {
+    "text": "Australia",
+    "url": "https://chillfiltr.com/tag/australia",
+	"valcount": 71
+  }
+]
+
 //Prepare one of the sample sentences by removing punctuation,
 // creating an array of words and computing a random size attribute.
 function getWords(i) {
-    return words[i]
-            .replace(/[!\.,:;\?]/g, '')
-            .split(' ')
+    return countries
             .map(function(d) {
-                return {text: d, size: 10 + Math.random() * 60};
+                return {text: d.text, size: 10 + Math.random() * 60};
             })
 }
 
